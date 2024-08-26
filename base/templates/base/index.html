@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Folder Structure</title>
+    </head>
+    <body>
+        <form action="/repo-structure" method="POST">
+            {% csrf_token %}
+            <label for="repo">Repository URL:</label>
+            <input type="text" id="repo" name="repo">
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>

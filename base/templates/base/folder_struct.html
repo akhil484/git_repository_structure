@@ -1,0 +1,98 @@
+{% load manip_data %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Folder Structure</title>
+        <style>
+         .error-message {
+    background-color: #f8d7da; 
+    color: #721c24; 
+    border: 1px solid #f5c6cb;
+    padding: 10px; 
+    margin-bottom: 20px; 
+    border-radius: 5px; 
+  }
+
+  .collapse > * {
+    margin-left: 14px; 
+    
+  }
+
+  .vscode-structure {
+        font-family: 'Consolas', 'Courier New', monospace;
+        background-color: #1e1e1e;
+        color: #d4d4d4;
+        padding: 20px;
+        border-radius: 5px;
+    }
+    .tree-view {
+        list-style-type: none;
+        padding-left: 20px;
+    }
+    .folder > ul {
+        display: none;
+        padding-left: 20px;
+    }
+    .folder.open > ul {
+        display: block;
+    }
+    .folder-name::before {
+        content: '▶';
+        display: inline-block;
+        margin-right: 5px;
+        transition: transform 0.2s;
+    }
+    .folder.open > .folder-name::before {
+        transform: rotate(90deg);
+    }
+    .file-name::before {
+        content: '📄';
+        margin-right: 5px;
+    }
+    .folder-name::before {
+        content: '📁';
+        margin-right: 5px;
+    }
+    .folder.open > .folder-name::before {
+        content: '📂';
+    }
+    .folder-name, .file-name {
+        cursor: pointer;
+        padding: 2px 5px;
+        border-radius: 3px;
+    }
+    .folder-name:hover, .file-name:hover {
+        background-color: #2a2d2e;
+    }
+  
+        </style>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    </head>
+    <body>
+
+        {% if error %}
+        <div class="error-message">
+            <strong>Error:</strong> {{error_msg}} Go <a href="/get-repo-structures">Back</a>
+          </div>
+        {% else %}
+        <ul>
+            {% for key, value in folder_structure.items %}   
+                {{key|get_complete_struct:value}}
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </body>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>  
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const folders = document.querySelectorAll('.folder > .folder-name');
+    folders.forEach(folder => {
+        folder.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.parentElement.classList.toggle('open');
+        });
+    });
+});
+    </script>
+
+</html>
